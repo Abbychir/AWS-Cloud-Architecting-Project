@@ -13,7 +13,7 @@ The solution utilizes the following key components:
 6. **IAM Roles and Policies**: Enforce least-privilege access control.  
 
 ## Architecture Diagram  
-![AWS Architecture Diagram](architecture-diagram.png)  
+![AWS-Cloud-Architecting-Project/Architecture_Diagram](capstone.drawio.png)   
 *(Replace with the path to your uploaded architecture image file)*
 
 ## Deployment Notes  
