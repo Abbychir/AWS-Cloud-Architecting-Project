@@ -1,124 +1,63 @@
-# AWS-Cloud-Architecting-Project
-A repository for the final capstone project of the AWS Academy Cloud Architecting Course
+AWS Academy Cloud Architecting – Capstone Project
 
-Here’s a **Markdown rubric** for this `README.md` file tailored to the Capstone Project final submission. This rubric will guide learners on structuring a comprehensive and professional `README.md` for your project repositories.
+This project provides a scalable and secure architecture for hosting a PHP-based web application with a MySQL database. The application is designed to serve global development statistics to social science researchers. This solution uses AWS services such as EC2, RDS, ALB, Auto Scaling, and Secrets Manager to ensure high availability, security, and scalability.
+
+ Architecture Overview
+
+The architecture consists of the following components:
+
+1. Amazon RDS (MySQL Database) 
+   - The MySQL database is hosted on Amazon RDS and is located in a private subnet. The application uses Secrets Manager to securely store and retrieve database credentials.
+
+2. Application Load Balancer (ALB)
+   - The ALB is deployed in public subnets and distributes incoming traffic across multiple EC2 instances running the PHP application. The ALB ensures high availability by routing traffic to healthy instances.
+
+3. Amazon EC2 Instances (Web Servers)
+   - EC2 instances running Amazon Linux 2023 host the PHP application. The instances are placed in private subnets for security and scalability. The Auto Scaling Group ensures that the application can scale based on incoming traffic.
+
+4. Auto Scaling
+   - Auto Scaling ensures that the application scales dynamically based on load, using a launch template to configure the EC2 instances.
+
+5. Secrets Manager
+   - AWS Secrets Manager is used to store database credentials securely, ensuring that they are not hardcoded in the application code.
 
 
-## Introduction  
-### 1. Project Title  
-- Provide a clear, descriptive, and professional title for your project.  
+ Key Design Decisions
 
-**Example:**  
-`Cloud Architecting Capstone Project: Scalable High Availabity E-commerce Application`
+1. High Availability
+   - The Application Load Balancer and EC2 instances are deployed in multiple Availability Zones for fault tolerance. The RDS MySQL database is also deployed with Multi-AZ support for high availability.
 
----
+2. Security
+   - The EC2 instances are placed in private subnets to prevent direct access from the internet. Only the ALB is accessible publicly.
+   - Database credentials are stored in Secrets Manager, ensuring secure access to the MySQL database.
 
-### 2. Project Overview  
-- Summarize the project in 2-3 sentences. Include the purpose, high-level functionality, and key AWS services used.  
+3. Scalability
+   - The Auto Scaling Group ensures that the number of EC2 instances can scale up or down based on traffic. The Application Load Balancer balances traffic to ensure smooth performance even with fluctuating loads.
 
-**Checklist:**  
-- [ ] What problem does this project solve?  
-- [ ] Why is this solution important?  
-- [ ] What is the primary AWS architecture implemented?
+4. Cost Management
+   - The EC2 instances are sized appropriately (t2.micro) to meet the requirements without incurring unnecessary costs. The use of RDS with a small db.t3.micro instance ensures cost-effective database hosting.
 
----
+ Project Steps
 
-## Architecture Diagram  
-- Include a detailed architecture diagram of your solution. You can use tools like **Lucidchart**, **Draw.io**, or **AWS Architecture Diagramming Tool**.  
+Step 1: Creating Amazon RDS MySQL Database
+- Create an RDS instance in a private subnet using the db.t3.micro instance type.
+- Store database credentials in Secrets Manager.
 
-**Checklist:**  
-- [ ] Does the diagram include all key components (e.g., VPC, subnets, load balancers, EC2 instances, S3 buckets)?  
-- [ ] Are security services like IAM roles, security groups, and KMS indicated?  
-- [ ] Is the flow of data/workload clearly illustrated?  
+Step 2: Configuring the Application Load Balancer (ALB)
+- Deploy the ALB in public subnets and configure it to distribute traffic to EC2 instances in private subnets.
 
----
+ Step 3: Launch EC2 Instances in an Auto Scaling Group
+- Use the provided EC2 launch template and Auto Scaling group to deploy the PHP application.
+- Configure the Auto Scaling policy to adjust based on traffic.
 
-## Features and Functionality  
-### 1. Key Features  
-- List and briefly describe the primary features of your project.  
+ Step 4: Data Import into RDS MySQL Database
+- Use the provided SQL dump file to import data into the MySQL database.
 
-**Example:**  
-- `Autoscaling`: Automatically adjusts the number of instances based on traffic.  
-- `Highly Available`: Built using multi-AZ deployment.  
-- `Cost Optimization`: Utilizes AWS pricing models such as Reserved Instances or Spot Instances.  
+ Step 5: Test the Application
+- Test the application by accessing it via the ALB DNS name in a browser.
+- Verify that the PHP application retrieves data from the RDS database corr
 
-### 2. AWS Services Used  
-- Provide a list of AWS services with a short explanation of their role in the project.  
 
-**Example:**  
-- `Amazon S3`: Stores static assets like images and files.  
-- `Amazon RDS`: Hosts the relational database for the application.
 
----
 
-## Deployment  
-### 1. Prerequisites  
-- List any software, tools, or AWS configurations required to deploy the project.  
 
-**Example:**  
-- `AWS CLI` installed and configured.  
-- IAM user with admin privileges.  
-
-### 2. Step-by-Step Deployment Instructions  
-- Provide a clear, concise set of steps for deploying the project.  
-
-**Checklist:**  
-- [ ] Include instructions for launching CloudFormation templates or Terraform scripts (if applicable).  
-- [ ] Detail any manual configurations in the AWS Management Console.  
-
----
-
-## Security  
-- Describe security measures implemented in your architecture.  
-
-**Example:**  
-- `IAM Roles`: Restrict access to resources based on least privilege.  
-- `Encryption`: S3 bucket encryption using SSE-KMS.  
-- `Network Security`: Configured security groups and NACLs.  
-
----
-
-## Testing and Validation  
-### 1. Testing Strategy  
-- Describe how the project was tested, including tools used (e.g., Postman, AWS CloudWatch Logs).  
-
-**Checklist:**  
-- [ ] What tests were conducted (e.g., load testing, failover testing)?  
-- [ ] Include commands, test cases, or examples.  
-
----
-
-## Challenges and Learnings  
-- Reflect on any challenges faced during implementation and what you learned from them.  
-
-**Example:**  
-- Challenge: Setting up an ALB to route traffic between subnets.  
-- Learning: Gained hands-on experience with cross-zone load balancing.  
-
----
-
-## Future Improvements  
-- Suggest potential upgrades or optimizations for the project.  
-
-**Example:**  
-- Implement CI/CD using AWS CodePipeline.  
-- Enhance monitoring with Amazon CloudWatch Insights.
-
----
-
-## Contributors  
-- List team members and their contributions.  
-
-**Example:**  
-`Jane Doe - Architecture Design, Documentation`  
-`John Smith - Deployment, Security Configuration`
-
----
-
-## License  
-- Include licensing information for your project (if applicable).  
-
-**Example:**  
-This project is licensed under the MIT License.
-
----
